@@ -10,5 +10,14 @@ getData <- function() {
   }
 }
 
+loadAndFilterData <- function() {
+  data <- read.csv("./household_power_consumption.txt",sep=";",header=TRUE,stringsAsFactors=FALSE,colClasses=c("character","character","numeric","numeric","numeric","numeric","numeric","numeric","numeric"),na.strings=c("?"))
+  data$Date <- as.Date(data$Date,"%d/%m/%Y")
+  data <- subset(data, Date >= as.Date("2007-02-01","%Y-%m-%d"))
+  data <- subset(data, Date < as.Date("2007-02-03","%Y-%m-%d"))
+  data$DateTime <- as.POSIXct(paste(data$Date, data$Time), format="%Y-%m-%d %H:%M:%S")
+  data
+}
+
 
 
